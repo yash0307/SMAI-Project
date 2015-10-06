@@ -8,7 +8,7 @@ nmatf = {1:3,4:5,6:8,9:10,11:12,13:14};
 matfiles = {'batting_bat','batting_ball','batting_stumps','bowling_ball','bowling_stumps','croquet_mallet','croquet_ball','croquet_hoop','forehand_ball','forehand_racquet','serve_ball','serve_racquet','smash_ball','smash_net'};
 warning off;
 
-
+counter = 0;
 for d=1:6
 
 directory = ['./' directories{d} '/'];
@@ -40,8 +40,12 @@ for f=1:30
           plot([O{t}{f}(n,1)+O{t}{f}(n,3) O{t}{f}(n,1)+O{t}{f}(n,3)],[O{t}{f}(n,2) O{t}{f}(n,2)+O{t}{f}(n,4)],'linewidth',3);
           plot([O{t}{f}(n,1) O{t}{f}(n,1)+O{t}{f}(n,3)],[O{t}{f}(n,2)+O{t}{f}(n,4) O{t}{f}(n,2)+O{t}{f}(n,4)],'linewidth',3);
           plot([O{t}{f}(n,1) O{t}{f}(n,1)],[O{t}{f}(n,2) O{t}{f}(n,2)+O{t}{f}(n,4)],'linewidth',3);
-          im_object = im(O{t}{f}(n,2):O{t}{f}(n,2)+O{t}{f}(n,4) , O{t}{f}(n,1):O{t}{f}(n,3)+O{t}{f}(n,1));
-          imwrite(im_object, char(strcat('./Objects/', 'image',num2str(t,'%02d'), '_',num2str(f,'%02d'), '.png')));
+          if(O{t}{f}(n,2)+O{t}{f}(n,4) < size(im,1) && O{t}{f}(n,3)+O{t}{f}(n,1) < size(im,2))
+            im_object = im(O{t}{f}(n,2):O{t}{f}(n,2)+O{t}{f}(n,4) , O{t}{f}(n,1):O{t}{f}(n,3)+O{t}{f}(n,1), :);
+            imwrite(im_object, char(strcat('./Objects/', 'image',num2str(counter,'%02d'), '.png')));
+            imshow(im_object)
+            counter = counter + 1;
+          end
           n = n+1;
       end
       end
