@@ -36,7 +36,7 @@ for f=1:30
           plot([O{t}{f}(n,1)+O{t}{f}(n,3) O{t}{f}(n,1)+O{t}{f}(n,3)],[O{t}{f}(n,2) O{t}{f}(n,2)+O{t}{f}(n,4)],'linewidth',3);
           plot([O{t}{f}(n,1) O{t}{f}(n,1)+O{t}{f}(n,3)],[O{t}{f}(n,2)+O{t}{f}(n,4) O{t}{f}(n,2)+O{t}{f}(n,4)],'linewidth',3);
           plot([O{t}{f}(n,1) O{t}{f}(n,1)],[O{t}{f}(n,2) O{t}{f}(n,2)+O{t}{f}(n,4)],'linewidth',3);
-          
+          pause()
           n = n+1;
       end
       end
