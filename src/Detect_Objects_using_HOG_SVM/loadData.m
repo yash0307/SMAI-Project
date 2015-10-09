@@ -80,15 +80,15 @@ for t=1:1
       %end
       %pause()
       if(O{t}{f}(n,2)+O{t}{f}(n,4) < size(im,1) && O{t}{f}(n,3)+O{t}{f}(n,1) < size(im,2))
-          trainBoxes(1,f) = O{t}{f}(n,2);
-          trainBoxes(2,f) = O{t}{f}(n,1);
-          trainBoxes(3,f) = O{t}{f}(n,2)+O{t}{f}(n,4);
-          trainBoxes(4,f) = O{t}{f}(n,3)+O{t}{f}(n,1);
+          trainBoxes(2,f) = O{t}{f}(n,2);
+          trainBoxes(1,f) = O{t}{f}(n,1);
+          trainBoxes(4,f) = O{t}{f}(n,2)+O{t}{f}(n,4);
+          trainBoxes(3,f) = O{t}{f}(n,3)+O{t}{f}(n,1);
           
-          testBoxes(1,f) = O{t}{f}(n,2);
-          testBoxes(2,f) = O{t}{f}(n,1);
-          testBoxes(3,f) = O{t}{f}(n,2)+O{t}{f}(n,4);
-          testBoxes(4,f) = O{t}{f}(n,3)+O{t}{f}(n,1);
+          testBoxes(2,f) = O{t}{f}(n,2);
+          testBoxes(1,f) = O{t}{f}(n,1);
+          testBoxes(4,f) = O{t}{f}(n,2)+O{t}{f}(n,4);
+          testBoxes(3,f) = O{t}{f}(n,3)+O{t}{f}(n,1);
       end
       end
 end
