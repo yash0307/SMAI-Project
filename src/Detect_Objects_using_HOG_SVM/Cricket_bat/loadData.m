@@ -34,7 +34,7 @@ targetClass = 'cricket_batting';
 %  'testBoxPatches') ;
 % Give corresponding training set. %
 %if(strcmp(lower(targetClass), 'cricket_batting') == 0)
-        target_url = '../../Dataset/pami2009_release/pami09_preRelease/cricket_batting/train/';
+        target_url = '../../../Dataset/pami2009_release/pami09_preRelease/cricket_batting/train/';
         for i=1:30
             target_url_image = strcat(target_url,'image',num2str(i,'%02d'), '.png');
             trainImages(i) = {target_url_image};
@@ -59,9 +59,9 @@ testBoxes  = zeros(4,30);
 directories = {'cricket_batting','cricket_bowling','croquet','tennis_forehand','tennis_serve','volleyball_smash'};
 nmatf = {1:3,4:5,6:8,9:10,11:12,13:14};
 matfiles = {'batting_bat','batting_ball','batting_stumps','bowling_ball','bowling_stumps','croquet_mallet','croquet_ball','croquet_hoop','forehand_ball','forehand_racquet','serve_ball','serve_racquet','smash_ball','smash_net'};
-directory = ['../../Dataset/pami2009_release/pami09_preRelease/' directories{targetClass_num} '/'];
+directory = ['../../../Dataset/pami2009_release/pami09_preRelease/' directories{targetClass_num} '/'];
 for t=1:numel(nmatf{targetClass_num})
-    load(['../../Dataset/pami2009_release/pami09_preRelease/object_annotations/' matfiles{nmatf{targetClass_num}(t)}])
+    load(['../../../Dataset/pami2009_release/pami09_preRelease/object_annotations/' matfiles{nmatf{targetClass_num}(t)}])
     O{t} = object;
     clear object;
 end
@@ -99,7 +99,7 @@ testBoxLabels = zeros(30,1);
 for i = 1:30
     trainBoxLabels(i) = targetClass_num;
     testBoxLabels(i) = targetClass_num;
-    file_path = strcat('../../Dataset/pami2009_release/pami09_preRelease/Objects/cricket_bat/image', num2str(i,'%02d'), '.png');
+    file_path = strcat('../../../Dataset/pami2009_release/pami09_preRelease/Objects/cricket_bat/image', num2str(i,'%02d'), '.png');
     im = imread(file_path);
     trainBoxPatches{i} = im;
     

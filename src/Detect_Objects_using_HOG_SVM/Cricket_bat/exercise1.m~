@@ -7,12 +7,6 @@
 
 setup ;
 
-
-% @yash0307 : Implementation level detail -> From loadData Patches are used
-% as cell. Converted to 4-D array here. God Knows why I have to do this.
-% But, I don't give a shit since it works :P
-
-
 % Load the training and testing data (trainImages, trainBoxes, ...)
 % The functio takes the ID of the type of traffic sign we want to recognize
 % 1 is the 30 km/h speed limit
@@ -67,8 +61,8 @@ axis equal ;
 % Note : We are limited by the small number of training images.
 hogCellSize = 8 ;
 trainHog = {} ;
-for i = 1:size(trainBoxPatchesArray,4)
-  trainHog{i} = vl_hog(single(trainBoxPatchesArray(:,:,:,i)), hogCellSize) ;
+for i = 1:size(trainBoxPatches,4)
+  trainHog{i} = vl_hog(single(trainBoxPatches(:,:,:,i)), hogCellSize) ;
 end
 trainHog = cat(4, trainHog{:}) ;
 
@@ -77,7 +71,9 @@ trainHog = cat(4, trainHog{:}) ;
 % -------------------------------------------------------------------------
 
 w = mean(trainHog, 4) ;
+
 save('data/signs-model-1.mat', 'w') ;
+
 figure(2) ; clf ;
 imagesc(vl_hog('render', w)) ;
 colormap gray ;
@@ -88,12 +84,10 @@ title('HOG model') ;
 % Step 1.4: Apply the model to a test image
 % -------------------------------------------------------------------------
 
-im = imread(testImages{5});
-im = im2single(im);
-% @yash0307, compute HOG on test image.
-% Apply computed HOG on HOG model.
-hog = vl_hog(im, hogCellSize);
-scores = vl_nnconv(hog, w, []);
+im = imread(testImages{10}) ;
+im = im2single(im) ;
+hog = vl_hog(im, hogCellSize) ;
+scores = vl_nnconv(hog, w, []) ;
 
 figure(3) ; clf ;
 imagesc(scores) ;
@@ -104,7 +98,8 @@ colorbar ;
 % Step 1.5: Extract the top detection
 % -------------------------------------------------------------------------
 
-[best, bestIndex] = min(scores(:));
+[best, bestIndex] = max(scores(:)) ;
+bestIndex = 530;
 [hy, hx] = ind2sub(size(scores), bestIndex) ;
 x = (hx - 1) * hogCellSize + 1 ;
 y = (hy - 1) * hogCellSize + 1 ;
