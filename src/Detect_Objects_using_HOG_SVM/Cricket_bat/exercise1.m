@@ -87,38 +87,39 @@ title('HOG model') ;
 % -------------------------------------------------------------------------
 % Step 1.4: Apply the model to a test image
 % -------------------------------------------------------------------------
+for givenTestImage=1:30
+    im = imread(testImages{givenTestImage});
+    im = im2single(im);
+    % @yash0307, compute HOG on test image.
+    % Apply computed HOG on HOG model.
+    hog = vl_hog(im, hogCellSize);
+    scores = vl_nnconv(hog, w, []);
 
-im = imread(testImages{5});
-im = im2single(im);
-% @yash0307, compute HOG on test image.
-% Apply computed HOG on HOG model.
-hog = vl_hog(im, hogCellSize);
-scores = vl_nnconv(hog, w, []);
+    figure,
+    imagesc(scores) ;
+    title('Detection') ;
+    colorbar ;
 
-figure(3) ; clf ;
-imagesc(scores) ;
-title('Detection') ;
-colorbar ;
+    % -------------------------------------------------------------------------
+    % Step 1.5: Extract the top detection
+    % -------------------------------------------------------------------------
 
-% -------------------------------------------------------------------------
-% Step 1.5: Extract the top detection
-% -------------------------------------------------------------------------
+    [best, bestIndex] = min(scores(:));
+    [hy, hx] = ind2sub(size(scores), bestIndex) ;
+    x = (hx - 1) * hogCellSize + 1 ;
+    y = (hy - 1) * hogCellSize + 1 ;
 
-[best, bestIndex] = min(scores(:));
-[hy, hx] = ind2sub(size(scores), bestIndex) ;
-x = (hx - 1) * hogCellSize + 1 ;
-y = (hy - 1) * hogCellSize + 1 ;
+    modelWidth = size(trainHog, 2) ;
+    modelHeight = size(trainHog, 1) ;
+    detection = [
+      x - 0.5 ;
+      y - 0.5 ;
+      x + hogCellSize * modelWidth - 0.5 ;
+      y + hogCellSize * modelHeight - 0.5 ;] ;
 
-modelWidth = size(trainHog, 2) ;
-modelHeight = size(trainHog, 1) ;
-detection = [
-  x - 0.5 ;
-  y - 0.5 ;
-  x + hogCellSize * modelWidth - 0.5 ;
-  y + hogCellSize * modelHeight - 0.5 ;] ;
-
-figure(4) ; clf ;
-imagesc(im) ; axis equal ;
-hold on ;
-vl_plotbox(detection, 'g', 'linewidth', 5) ;
-title('Response scores') ;
+    figure,
+    imagesc(im) ; axis equal ;
+    hold on ;
+    vl_plotbox(detection, 'g', 'linewidth', 5) ;
+    title('Response scores') ;
+end
