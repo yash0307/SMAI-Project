@@ -1,4 +1,4 @@
-% EXERCISE2
+%% Yash Patel, yash0307
 setup ;
 
 %targetClass = 1 ;
@@ -12,13 +12,13 @@ loadData;
 hogCellSize = 8 ;
 trainHog = {} ;
 for i = 1:size(trainBoxPatches,4)
-  trainHog{i} = vl_hog(single(trainBoxPatches(:,:,:,i)), hogCellSize) ;
+  trainHog{i} = vl_hog(single(trainBoxPatches{i}), hogCellSize) ;
 end
 trainHog = cat(4, trainHog{:}) ;
 
 % Learn a trivial HOG model (see Step 1.3)
 w = mean(trainHog, 4) ;
-save('data/signs-model-1.mat', 'w', 'targetClass') ;
+save('data/cricket_bat-model-1.mat', 'w', 'targetClass') ;
 
 figure(2) ; clf ;
 imagesc(vl_hog('render', w)) ;
@@ -38,7 +38,7 @@ scales = 2.^linspace(...
   maxScale,...
   numOctaveSubdivisions*(maxScale-minScale+1)) ;
 
-im = imread(testImages{20}) ;
+im = imread(testImages{2}) ;
 im = im2single(im) ;
 
 figure(5) ; clf ;

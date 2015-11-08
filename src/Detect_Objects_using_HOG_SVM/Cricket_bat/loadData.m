@@ -94,20 +94,17 @@ for t=1:1
 end
 trainBoxLabels = zeros(30,1);
 testBoxLabels = zeros(30,1);
-trainBoxPatches = zeros(64,64,3,30);
-testBoxPatches = zeros(64,64,3,30);
+%trainBoxPatches = zeros(64,64,3,30);
+%testBoxPatches = zeros(64,64,3,30);
 for i = 1:30
     trainBoxLabels(i) = targetClass_num;
     testBoxLabels(i) = targetClass_num;
     file_path = strcat('../../Dataset/pami2009_release/pami09_preRelease/Objects/cricket_bat/image', num2str(i,'%02d'), '.png');
     im = imread(file_path);
-    trainBoxPatches(:,:,1,i) = uint8(im(:,:,1));
-    trainBoxPatches(:,:,2,i) = uint8(im(:,:,2));
-    trainBoxPatches(:,:,3,i) = uint8(im(:,:,3));
+    trainBoxPatches{i} = im;
     
-    testBoxPatches(:,:,1,i) = uint8(im(:,:,1));
-    testBoxPatches(:,:,2,i) = uint8(im(:,:,2));
-    testBoxPatches(:,:,3,i) = uint8(im(:,:,3));
+    testBoxPatches{i} = im;
+    
 end
 %====================================================%
 %ok = ismember(trainBoxLabels, targetClass) ;
