@@ -13,9 +13,11 @@ setup ;
 % But, I don't give a shit since it works :P
 
 
-% Load the training and testing data (trainImages, trainBoxes, ...)
-% The functio takes the ID of the type of traffic sign we want to recognize
-% 1 is the 30 km/h speed limit
+%HOG = VL_HOG(IM, CELLSIZE) computes the HOG features for image IM and the 
+%specified CELLSIZE. IM can be either grayscale or colour in SINGLE storage
+%class. HOG is an array of cells: its number of columns is approximately 
+%the number of columns of IM divided by CELLSIZE and the same for the 
+%number of rows. The third dimension spans the feature compoents.
 
 %@yash0307, loadDa'trainImages', ...
 %  'trainBoxes', ...
@@ -40,6 +42,9 @@ figure(1) ; clf ;
 %@yash0307, scale the image
 % show the training object patches.
 % Convert the cell to 4-D array.
+
+% @yash0307, there isn't that bug here. The one that is present in
+% cricket_ball dataset.
 for i=1:30
     trainBoxPatchesArray(:,:,:,i) = trainBoxPatches{i};
 end

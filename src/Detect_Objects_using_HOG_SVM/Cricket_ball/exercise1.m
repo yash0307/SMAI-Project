@@ -12,6 +12,11 @@ setup ;
 % as cell. Converted to 4-D array here. God Knows why I have to do this.
 % But, I don't give a shit since it works :P
 
+%HOG = VL_HOG(IM, CELLSIZE) computes the HOG features for image IM and the 
+%specified CELLSIZE. IM can be either grayscale or colour in SINGLE storage
+%class. HOG is an array of cells: its number of columns is approximately 
+%the number of columns of IM divided by CELLSIZE and the same for the 
+%number of rows. The third dimension spans the feature compoents.
 
 % Load the training and testing data (trainImages, trainBoxes, ...)
 % The functio takes the ID of the type of traffic sign we want to recognize
@@ -40,6 +45,9 @@ figure(1) ; clf ;
 %@yash0307, scale the image
 % show the training object patches.
 % Convert the cell to 4-D array.
+
+% @yash0307, due to some bug with dataset. I did this :D if condition
+% thing.
 for i=1:30
     if(size(trainBoxPatches{i},3) == 3)
         trainBoxPatchesArray(:,:,:,i) = trainBoxPatches{i};
