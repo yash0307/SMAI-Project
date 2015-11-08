@@ -51,7 +51,7 @@ targetClass = 'cricket_bowling';
 if isstr(targetClass)
   switch lower(targetClass)
     case 'cricket_batting', targetClass = [1], targetClass_num = 1;
-    case 'cricket_bowling', targetClass = [2], targetClass_num = 2;
+      case 'cricket_bowling', targetClass = [2], targetClass_num = 2;
   end
 end
 % Find trainBox and trainBoxImages. %
@@ -99,7 +99,7 @@ testBoxLabels = zeros(30,1);
 for i = 1:30
     trainBoxLabels(i) = targetClass_num;
     testBoxLabels(i) = targetClass_num;
-    file_path = strcat('../../../Dataset/pami2009_release/pami09_preRelease/Objects/cricket_ball/image', num2str(i,'%02d'), '.png');
+    file_path = strcat('', num2str(i,'%02d'), '.png');
     im = imread(file_path);
     trainBoxPatches{i} = im;
     

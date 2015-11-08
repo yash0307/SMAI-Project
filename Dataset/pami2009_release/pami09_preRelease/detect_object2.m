@@ -9,7 +9,7 @@ matfiles = {'batting_bat','batting_ball','batting_stumps','bowling_ball','bowlin
 warning off;
 
 counter = 1;
-for d=1:6
+d=2;
 
 directory = ['./' directories{d} '/'];
 
@@ -26,11 +26,11 @@ for t=1:numel(nmatf{d})
           if(O{t}{f}(n,2)+O{t}{f}(n,4) < size(im,1) && O{t}{f}(n,3)+O{t}{f}(n,1) < size(im,2))
             if(O{t}{f}(n,1)&&O{t}{f}(n,2)&&O{t}{f}(n,3)&&O{t}{f}(n,4))
                 im_object = imresize(im(O{t}{f}(n,2):O{t}{f}(n,2)+O{t}{f}(n,4) , O{t}{f}(n,1):O{t}{f}(n,3)+O{t}{f}(n,1), :), [64 64]);
-                imwrite(im_object, char(strcat('./Objects/cricket_bat/', 'image',num2str(counter,'%02d'), '.png')));
+                imwrite(im_object, char(strcat('./Objects/cricket_ball/', 'image',num2str(counter,'%02d'), '.png')));
                 imshow(im_object)
             else
                 im_object = imresize(im(1:20, 1:20, :), [64 64]);
-                imwrite(im_object, char(strcat('./Objects/cricket_bat/', 'image',num2str(counter,'%02d'), '.png')));
+                imwrite(im_object, char(strcat('./Objects/cricket_ball/', 'image',num2str(counter,'%02d'), '.png')));
                 imshow(im_object)
             end
             counter = counter + 1;
@@ -42,5 +42,4 @@ for t=1:numel(nmatf{d})
       hold off;
 end
 
-end
 warning on;

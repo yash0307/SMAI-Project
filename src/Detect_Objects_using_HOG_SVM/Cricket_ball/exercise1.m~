@@ -44,9 +44,7 @@ for i=1:30
     if(size(trainBoxPatches{i},3) == 3)
         trainBoxPatchesArray(:,:,:,i) = trainBoxPatches{i};
     else
-        trainBoxPatchesArray(:,:,1,i) = zeros(size(trainBoxPatches{i}));
-        trainBoxPatchesArray(:,:,2,i) = zeros(size(trainBoxPatches{i}));
-        trainBoxPatchesArray(:,:,3,i) = zeros(size(trainBoxPatches{i}));
+        trainBoxPatchesArray(:,:,:,i) = 
     end
 end
 subplot(1,2,1);
