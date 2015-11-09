@@ -1,18 +1,60 @@
 %% Yash Patel, yash0307
+
+% -------------------------------------------------------------------------
+% Step 1.0: Load training data
+% -------------------------------------------------------------------------
+
 setup ;
 
-%targetClass = 1 ;
-%targetClass = 'prohibitory';
-%targetClass = 'mandatory';
-%targetClass = 'danger';
+
+% @yash0307 : Implementation level detail -> From loadData Patches are used
+% as cell. Converted to 4-D array here. God Knows why I have to do this.
+% But, I don't give a shit since it works :P
+
+%HOG = VL_HOG(IM, CELLSIZE) computes the HOG features for image IM and the 
+%specified CELLSIZE. IM can be either grayscale or colour in SINGLE storage
+%class. HOG is an array of cells: its number of columns is approximately 
+%the number of columns of IM divided by CELLSIZE and the same for the 
+%number of rows. The third dimension spans the feature compoents.
+
+% Load the training and testing data (trainImages, trainBoxes, ...)
+% The functio takes the ID of the type of traffic sign we want to recognize
+% 1 is the 30 km/h speed limit
+
+%@yash0307, loadDa'trainImages', ...
+%  'trainBoxes', ...
+%  'trainBoxImages', ...
+%  'trainBoxLabels', ...
+%  'trainBoxPatches', ...
+%  'testImages', ...
+%  'testBoxes', ...
+%  'testBoxImages', ...
+%  'testBoxLabels', ...
+%  'testBoxPatches', ...
+%  'targetClass'} ;ta gives the following
 
 loadData;
+%@yash0307, scale the image
+% show the training object patches.
+% Convert the cell to 4-D array.
+
+% @yash0307, due to some bug with dataset. I did this :D if condition
+% thing.
+for i=1:30
+    if(size(trainBoxPatches{i},3) == 3)
+        trainBoxPatchesArray(:,:,:,i) = trainBoxPatches{i};
+    else
+        trainBoxPatchesArray(:,:,1,i) = zeros(size(trainBoxPatches{i}));
+        trainBoxPatchesArray(:,:,2,i) = zeros(size(trainBoxPatches{i}));
+        trainBoxPatchesArray(:,:,3,i) = zeros(size(trainBoxPatches{i}));
+    end
+end
 
 % Compute HOG features of examples (see Step 1.2)
 hogCellSize = 8 ;
 trainHog = {} ;
 for i = 1:size(trainBoxPatches,4)
-  trainHog{i} = vl_hog(single(trainBoxPatches{i}), hogCellSize) ;
+  trainHog{i} = vl_hog(single(trainBoxPatchesArray(:,:,:,i)), hogCellSize) ;
 end
 trainHog = cat(4, trainHog{:}) ;
 
@@ -38,7 +80,8 @@ scales = 2.^linspace(...
   maxScale,...
   numOctaveSubdivisions*(maxScale-minScale+1)) ;
 
-im = imread(testImages{2}) ;
+
+im = imread(testImages{16}) ;
 im = im2single(im) ;
 
 figure(5) ; clf ;

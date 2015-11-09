@@ -1,18 +1,52 @@
-%% Yash Patel, yash0307
+
+%% Yash Patel, @yash0307
+
+
+% -------------------------------------------------------------------------
+% Step 1.0: Load training data
+% -------------------------------------------------------------------------
+
 setup ;
 
-%targetClass = 1 ;
-%targetClass = 'prohibitory';
-%targetClass = 'mandatory';
-%targetClass = 'danger';
+
+% @yash0307 : Implementation level detail -> From loadData Patches are used
+% as cell. Converted to 4-D array here. God Knows why I have to do this.
+% But, I don't give a shit since it works :P
+
+
+%HOG = VL_HOG(IM, CELLSIZE) computes the HOG features for image IM and the 
+%specified CELLSIZE. IM can be either grayscale or colour in SINGLE storage
+%class. HOG is an array of cells: its number of columns is approximately 
+%the number of columns of IM divided by CELLSIZE and the same for the 
+%number of rows. The third dimension spans the feature compoents.
+
+%@yash0307, loadDa'trainImages', ...
+%  'trainBoxes', ...
+%  'trainBoxImages', ...
+%  'trainBoxLabels', ...
+%  'trainBoxPatches', ...
+%  'testImages', ...
+%  'testBoxes', ...
+%  'testBoxImages', ...
+%  'testBoxLabels', ...
+%  'testBoxPatches', ...
+%  'targetClass'} ;ta gives the following
 
 loadData;
+%@yash0307, scale the image
+% show the training object patches.
+% Convert the cell to 4-D array.
 
-% Compute HOG features of examples (see Step 1.2)
+% @yash0307, there isn't that bug here. The one that is present in
+% cricket_ball dataset.
+for i=1:30
+    trainBoxPatchesArray(:,:,:,i) = trainBoxPatches{i};
+end
+
 hogCellSize = 8 ;
 trainHog = {} ;
 for i = 1:size(trainBoxPatches,4)
-  trainHog{i} = vl_hog(single(trainBoxPatches{i}), hogCellSize) ;
+  trainHog{i} = vl_hog(single(trainBoxPatchesArray(:,:,:,i)), hogCellSize) ;
 end
 trainHog = cat(4, trainHog{:}) ;
 
@@ -30,9 +64,15 @@ title('Trivial HOG model') ;
 % -------------------------------------------------------------------------
 
 % Scale space configuraiton
+% @yash0307, specify the scales you wanna try for.
 minScale = -1 ;
 maxScale = 3 ;
+
+% @yash0307, number of subdivisions per octave.
 numOctaveSubdivisions = 3 ;
+
+% @yash0307, generate linear spaces.
+% NOTE : Number of 
 scales = 2.^linspace(...
   minScale,...
   maxScale,...
